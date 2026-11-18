@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/tarefa.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
+import '../tema.dart';
 
 class TarefaFormScreen extends StatefulWidget {
   const TarefaFormScreen({super.key});
@@ -58,36 +59,52 @@ class _TarefaFormScreenState extends State<TarefaFormScreen> {
     return Scaffold(
       appBar: AppBar(
           title: Text(_tarefa == null ? 'Nova tarefa' : 'Editar tarefa')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _titulo,
-                decoration: const InputDecoration(
-                    labelText: 'Título', border: OutlineInputBorder()),
-                validator: (valor) => (valor == null || valor.trim().isEmpty)
-                    ? 'Informe o título'
-                    : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _descricao,
-                decoration: const InputDecoration(
-                    labelText: 'Descrição', border: OutlineInputBorder()),
-                maxLines: 3,
-              ),
-              if (_tarefa != null)
-                SwitchListTile(
-                  title: const Text('Concluída'),
-                  value: _concluida,
-                  onChanged: (v) => setState(() => _concluida = v),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(24),
+              children: [
+                TextFormField(
+                  controller: _titulo,
+                  decoration: const InputDecoration(
+                    labelText: 'Título',
+                    prefixIcon: Icon(Icons.edit_outlined),
+                  ),
+                  validator: (valor) => (valor == null || valor.trim().isEmpty)
+                      ? 'Informe o título'
+                      : null,
                 ),
-              const SizedBox(height: 20),
-              ElevatedButton(onPressed: _salvar, child: const Text('Salvar')),
-            ],
+                const SizedBox(height: 14),
+                TextFormField(
+                  controller: _descricao,
+                  decoration: const InputDecoration(
+                    labelText: 'Descrição (opcional)',
+                    alignLabelWithHint: true,
+                  ),
+                  maxLines: 4,
+                ),
+                if (_tarefa != null) ...[
+                  const SizedBox(height: 14),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: cinzaClaro),
+                    ),
+                    child: SwitchListTile(
+                      title: const Text('Concluída'),
+                      value: _concluida,
+                      onChanged: (v) => setState(() => _concluida = v),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 24),
+                ElevatedButton(onPressed: _salvar, child: const Text('Salvar')),
+              ],
+            ),
           ),
         ),
       ),

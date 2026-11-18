@@ -6,6 +6,7 @@ import 'screens/register_screen.dart';
 import 'screens/tarefa_form_screen.dart';
 import 'services/auth_service.dart';
 import 'services/database_service.dart';
+import 'tema.dart';
 
 void main() {
   DatabaseService.configurar();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'To-Do Nero',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
+      theme: temaApp,
       initialRoute: '/',
       // rotas
       routes: {

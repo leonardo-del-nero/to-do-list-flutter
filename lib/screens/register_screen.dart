@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/auth_service.dart';
+import '../tema.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -32,49 +33,73 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cadastro')),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TextFormField(
-                controller: _nome,
-                decoration: const InputDecoration(
-                    labelText: 'Nome', border: OutlineInputBorder()),
-                validator: (valor) => (valor == null || valor.trim().isEmpty)
-                    ? 'Informe o nome'
-                    : null,
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _email,
-                decoration: const InputDecoration(
-                    labelText: 'E-mail', border: OutlineInputBorder()),
-                keyboardType: TextInputType.emailAddress,
-                validator: (valor) {
-                  if (valor == null || valor.trim().isEmpty) {
-                    return 'Informe o e-mail';
-                  }
-                  if (!valor.contains('@')) return 'E-mail inválido';
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _senha,
-                decoration: const InputDecoration(
-                    labelText: 'Senha', border: OutlineInputBorder()),
-                obscureText: true,
-                validator: (valor) => (valor == null || valor.length < 6)
-                    ? 'A senha precisa de pelo menos 6 caracteres'
-                    : null,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: _cadastrar, child: const Text('Cadastrar')),
-            ],
+      appBar: AppBar(),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+              children: [
+                const Text(
+                  'Criar conta',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Leva menos de um minuto.',
+                  style: TextStyle(color: cinza),
+                ),
+                const SizedBox(height: 32),
+                TextFormField(
+                  controller: _nome,
+                  decoration: const InputDecoration(
+                    labelText: 'Nome',
+                    prefixIcon: Icon(Icons.person_outline),
+                  ),
+                  validator: (valor) => (valor == null || valor.trim().isEmpty)
+                      ? 'Informe o nome'
+                      : null,
+                ),
+                const SizedBox(height: 14),
+                TextFormField(
+                  controller: _email,
+                  decoration: const InputDecoration(
+                    labelText: 'E-mail',
+                    prefixIcon: Icon(Icons.mail_outline),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (valor) {
+                    if (valor == null || valor.trim().isEmpty) {
+                      return 'Informe o e-mail';
+                    }
+                    if (!valor.contains('@')) return 'E-mail inválido';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 14),
+                TextFormField(
+                  controller: _senha,
+                  decoration: const InputDecoration(
+                    labelText: 'Senha',
+                    prefixIcon: Icon(Icons.lock_outline),
+                    helperText: 'Mínimo de 6 caracteres',
+                  ),
+                  obscureText: true,
+                  validator: (valor) => (valor == null || valor.length < 6)
+                      ? 'A senha precisa de pelo menos 6 caracteres'
+                      : null,
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                    onPressed: _cadastrar, child: const Text('Cadastrar')),
+              ],
+            ),
           ),
         ),
       ),
